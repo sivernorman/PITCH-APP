@@ -1,0 +1,36 @@
+{% extends 'base.html'%}
+{% block content %}
+
+<div class='container' style="height: 800px;overflow-y: scroll; background-color: rgb(20, 20, 19);">
+
+<h1 class='amber-text' style='text-decoration:underline;'>ALL PITCHES </h1>
+
+<h2><a class="btn peach-gradient btn-lg text-center" href="{{url_for('main.new_pitch')}}"> Write a new pitch</a></h2>
+
+{% for items in pitches[::-1] %}
+
+<div class="container">
+  <div class="card text-center" style="width: 45%; height: 400px; float: left; margin: 17px;">
+   
+    <div class="card-header">
+        <h4 class="text-sm-left"><span style="height: 50px; width: 50px; background-color: black; color: white;border-radius: 50%; padding-left: 16px; padding-top: 12px;" class="fa fa-user"></span> Posted By: {{items.author.username}}</h4>
+   
+      </div>
+         <!--body-->
+    <div class="card-body" style="height:300px;overflow-y: scroll;">
+        <h4 class="card-title">{{items.pitch}}</h4>
+      </div>
+      <!--footer-->
+      <div class="card-footer text-muted">
+        <p class="text-center mb-0"><i class="fas fa-calendar mr-2"></i>{{items.posted.strftime('%Y-%m-%d')}}</p>
+        <p class="text-center mb-0"><i class="fas fa-list mr-2"></i>{{items.category}}</p>
+        <div>
+          <a href="{{url_for('main.leave_comment', pitch_id = items.id)}}"  
+          <h5 class="waves-effect waves-light">Comments<i class="far fa-comments ml-2"></i></h5></a>
+          <button><a href="{{url_for('main.like',id=items.id)}} "><h5 class="fas fa-thumbs-up"> {{items.upvote.count()}} Likes</h5> </a></button>     
+          <a href="{{url_for('main.dislike',id=items.id)}}"><h5 class="far fa-thumbs-down"> {{items.downvote.count()}} Dislikes</h5></a>
+  
+        </div>
+      </div>
+    </div>
+  </div>
